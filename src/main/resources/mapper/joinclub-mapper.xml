@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="JoinClub">
+
+    <insert id="joinClub" parameterType="map">
+        insert into join_club (user_index, user_id, club_nm, club_time)
+        values (#{user_index}, #{user_id}, #{club_nm}, #{club_time})
+    </insert>
+    <select id="joinDuplicationCheck" parameterType="map" resultType="Integer">
+        select count(*)
+        from join_club
+        where user_index = #{user_index}
+          and user_id = #{user_id}
+          and club_nm = #{club_nm}
+          and club_time = #{club_time}
+    </select>
+    <select id="appliedList" parameterType="map" resultType="joinClubDTO">
+        select *
+        from join_club
+        where user_index = #{user_index}
+          and user_id = #{user_id}
+    </select>
+    <delete id="removeClub" parameterType="map">
+        delete from join_club
+        where user_index = #{user_index}
+          and user_id = #{user_id}
+          and club_nm = #{club_nm}
+          and club_time = #{club_time}
+    </delete>
+</mapper>
